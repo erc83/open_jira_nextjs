@@ -1,14 +1,16 @@
+
+import { Layout } from "@/components/layouts"
+
 import { Typography } from "@mui/material"
-import { CssBaseline, ThemeProvider} from '@mui/material'
-import { darkTheme, lightTheme } from '../../themes'
 
 
 export default function HomePage() {
   return (
-    <ThemeProvider theme={ darkTheme }>
-      <CssBaseline />
+    <Layout title='Hola Open Jira'>
+      
       <Typography variant="h1" color='primary'>Hola Home Page</Typography>
-          
-    </ThemeProvider> 
+    
+    </Layout>
+    
   )
 }
