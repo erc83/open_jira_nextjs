@@ -19,6 +19,15 @@ export const lightTheme = createTheme({
     },
     // es otro objeto que puede cambiar el color de todos los componentes de material ui y se estandarizan
     components: {
-        
+        MuiAppBar:{
+            defaultProps: {      // es otro objeto que se puede enviar, modificando elevation
+                elevation: 0
+            },    
+            styleOverrides:{      // para cambiar el stylo
+              root: {
+                backgroundColor: '#4a148c',
+              }
+            }
+          }
     }
 }); 

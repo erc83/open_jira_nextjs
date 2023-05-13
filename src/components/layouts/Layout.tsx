@@ -3,6 +3,7 @@ import Head from 'next/head';   // especifico cierta propiedaddes a mostrar en e
 
 import { Box, CssBaseline, ThemeProvider } from "@mui/material"
 import { darkTheme, lightTheme } from '../../../themes';
+import { Nabvar } from '../ui';
 
 interface Props {
     title?: string;
@@ -20,7 +21,7 @@ export const Layout: FC<Props> = ({ title = 'Open Jira', children }) => {
                 <title>{ title }</title>
             </Head>
 
-            {/* Nabvar */}
+             <Nabvar />
             {/* Sidebar  */}
 
             <Box sx={{ padding: '10px 20px'}}>

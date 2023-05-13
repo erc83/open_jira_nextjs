@@ -13,9 +13,19 @@ export const darkTheme = createTheme({
     error:{
         main: red.A400
     },
-},
-// es otro objeto que puede cambiar el color de todos los componentes de material ui y se estandarizan
-components: {
-    
-}
+  },
+  // para modificar el AppBar se tiene que llamar el MuiAppBar y solo para este tema en especifico
+  components: {
+    MuiAppBar:{
+      defaultProps: {
+        elevation: 0
+      },     // es otro objeto que se puede enviar,
+      styleOverrides:{      // para cambiar el stylo
+        root: {
+          backgroundColor: '#4a148c',
+          elevation: 0
+        }
+      }
+    }
+  }
 }); 
