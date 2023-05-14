@@ -10,14 +10,16 @@ const menuItems: string[] = ['Inbox','Starred','Send Email', 'Drafts' ]
 
 export const Sidebar = () => {
 
-    const { sidemenuOpen } = useContext( UIContext )  
+    const { sidemenuOpen, closeSideMenu } = useContext( UIContext )  
+
 
   return (
     <Drawer
         anchor="left"
         // open={ true }
         open={ sidemenuOpen }  // aqui pasamos el valor del context que esta en falso inicialmente
-        onClose={ () => console.log('cerrando')}
+        // onClose={ () => console.log('cerrando')}
+        onClose={ closeSideMenu }
     >
         <Box sx={{ width: 250}}>
 

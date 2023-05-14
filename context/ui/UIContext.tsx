@@ -6,6 +6,7 @@ interface ContextProps {
 
     // methods 
     openSideMenu: () => void; 
+    closeSideMenu: () => void; 
 }
 
 

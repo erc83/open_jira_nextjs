@@ -17,12 +17,18 @@ export const UIProvider:FC = ({ children }) => {
    const openSideMenu = ( ) => {
         dispatch({ type: 'UI - Open Sidebar'}) 
    }
+   
+   const closeSideMenu = ( ) => {
+        dispatch({ type: 'UI - Close Sidebar'}) 
+   }
+   //const closeSideMenu = () => dispatch ({ type: 'UI - Close Sidebar'}) 
 
    return (
         <UIContext.Provider value={{
            ...state,               
            // methods  
-           openSideMenu,   
+           openSideMenu,
+           closeSideMenu   
         }}>
             { children }
         </UIContext.Provider>
