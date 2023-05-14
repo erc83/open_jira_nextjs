@@ -1,15 +1,22 @@
+import { useContext } from 'react';
+
 import { Drawer, Box, Typography, List, ListItem, ListItemIcon, ListItemText, Divider } from '@mui/material';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import InboxOutlinedIcon from '@mui/icons-material/InboxOutlined';
+import { UIContext } from '../../../context/ui';
 
 
 const menuItems: string[] = ['Inbox','Starred','Send Email', 'Drafts' ]
 
 export const Sidebar = () => {
+
+    const { sidemenuOpen } = useContext( UIContext )  
+
   return (
     <Drawer
         anchor="left"
-        open={ true }
+        // open={ true }
+        open={ sidemenuOpen }  // aqui pasamos el valor del context que esta en falso inicialmente
         onClose={ () => console.log('cerrando')}
     >
         <Box sx={{ width: 250}}>

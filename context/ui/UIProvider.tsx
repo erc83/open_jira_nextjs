@@ -3,20 +3,26 @@ import { UIContext, uiReducer } from './';
 
 export interface UIState {
     sidemenuOpen: boolean;
-    children?: JSX.Element;
 }
 
 const UI_INITIAL_STATE: UIState = {
     sidemenuOpen: false,
 }
 
-export const UIProvider:FC<UIState> = ({ children }) => {
+export const UIProvider:FC = ({ children }) => {
 
    const [state, dispatch] = useReducer( uiReducer, UI_INITIAL_STATE)
 
+   
+   const openSideMenu = ( ) => {
+        dispatch({ type: 'UI - Open Sidebar'}) 
+   }
+
    return (
         <UIContext.Provider value={{
-            sidemenuOpen: false
+           ...state,               
+           // methods  
+           openSideMenu,   
         }}>
             { children }
         </UIContext.Provider>
