@@ -10,8 +10,9 @@ import { UIProvider } from '../../../context/ui';
 
 interface Props {
     title?: string;
-    //children: JSX.Element
+    children: React.ReactNode
 }
+
 
 export const Layout: FC<Props> = ({ title = 'Open Jira', children }) => {
   return (
