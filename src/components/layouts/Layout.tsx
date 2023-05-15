@@ -6,6 +6,7 @@ import { darkTheme, lightTheme } from '../../../themes';
 
 import { Nabvar, Sidebar } from '../ui';
 import { UIProvider } from '../../../context/ui';
+import { EntriesProvider } from '../../../context/entries';
 
 
 interface Props {
@@ -13,29 +14,30 @@ interface Props {
     children: React.ReactNode
 }
 
-
 export const Layout: FC<Props> = ({ title = 'Open Jira', children }) => {
   return (
-    <UIProvider>
-      <ThemeProvider theme={ darkTheme }>
-        <CssBaseline />
-            
-          <Box sx={{ flexFlow:1,  }}>
-              <Head>
-                  <title>{ title }</title>
-              </Head>
+    <EntriesProvider>
+      <UIProvider>
+        <ThemeProvider theme={ darkTheme }>
+          <CssBaseline />
+              
+            <Box sx={{ flexFlow:1,  }}>
+                <Head>
+                    <title>{ title }</title>
+                </Head>
 
-              <Nabvar />
-                
-              <Sidebar />
+                <Nabvar />
+                  
+                <Sidebar />
 
-              <Box sx={{ padding: '10px 20px'}}>
-                  { children }
-              </Box>
-      
-          </Box>
-      </ThemeProvider> 
-    </UIProvider>
+                <Box sx={{ padding: '10px 20px'}}>
+                    { children }
+                </Box>
+        
+            </Box>
+        </ThemeProvider> 
+      </UIProvider>
+    </EntriesProvider>
   )
 }
 
