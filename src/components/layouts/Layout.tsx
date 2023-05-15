@@ -8,15 +8,14 @@ import { Nabvar, Sidebar } from '../ui';
 import { UIProvider } from '../../../context/ui';
 import { EntriesProvider } from '../../../context/entries';
 
-
 interface Props {
     title?: string;
-    children: React.ReactNode
+    children: React.ReactNode;
 }
 
-export const Layout: FC<Props> = ({ title = 'Open Jira', children }) => {
+export const Layout: FC<Props> = ({ title = 'Open Jira', children } ) => {
   return (
-    <EntriesProvider>
+    <EntriesProvider entries={[]}>
       <UIProvider>
         <ThemeProvider theme={ darkTheme }>
           <CssBaseline />
