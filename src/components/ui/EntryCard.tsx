@@ -1,7 +1,12 @@
 import { Card, CardActionArea, CardActions, CardContent, Typography } from '@mui/material';
+import { Entry } from '../../../interfaces';
+import { FC } from 'react';
 
+interface Props {
+    entry: Entry
+}
 
-export const EntryCard = () => {
+export const EntryCard: FC<Props> = ({ entry }) => {
   return (
     <Card
         sx={{ marginBottom: 1 }}
@@ -9,7 +14,7 @@ export const EntryCard = () => {
 
         <CardActionArea>
             <CardContent>
-                <Typography sx={{ whiteSpace: 'pre-line'}}>Esto es la descripcion</Typography>
+                <Typography sx={{ whiteSpace: 'pre-line'}}>{ entry.description }</Typography>
             </CardContent>
 
             <CardActions sx={{ display:'flex', justifyContent:'end', paddingRight:2  }}>
@@ -21,3 +26,6 @@ export const EntryCard = () => {
     </Card>
   )
 }
+
+
+

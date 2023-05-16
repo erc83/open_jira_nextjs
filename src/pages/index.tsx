@@ -19,7 +19,7 @@ export default function HomePage() {
 
               {/* Agregar una nueva entrada */}
               {/* Listado de las entradas  */}
-              <EntryList/>
+              <EntryList status='pending' />
 
           </Card>
         
@@ -28,7 +28,7 @@ export default function HomePage() {
           <Card sx={{ height: 'calc(100vh - 100px )'}}>
             <CardHeader title="En Progreso" />
           
-            <EntryList/>
+            <EntryList status='in-progress'  />
           </Card>
         
         </Grid>
@@ -36,7 +36,7 @@ export default function HomePage() {
           <Card sx={{ height: 'calc(100vh - 100px )'}}>
             <CardHeader title="Completadas" />
           
-            <EntryList/>
+            <EntryList status='finished'/>
           </Card>
         
         </Grid>

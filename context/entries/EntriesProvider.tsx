@@ -13,19 +13,19 @@ const Entries_INITIAL_STATE: EntriesState = {
     entries: [
         {
             _id: uuidv4(),
-            description: 'Lorem impsum',
+            description: 'Pendiente: Lorem impsum',
             status: 'pending',
             createdAt: Date.now(),
         },
         {
             _id: uuidv4(),
-            description: 'Lorem impsum in-progres',
+            description: 'En-Progreso Lorem impsum in-progres',
             status: 'in-progress',
             createdAt: Date.now() - 1000000,
         },
         {
             _id: uuidv4(),
-            description: 'Lorem impsum finished',
+            description: 'Terminadas: Lorem impsum finished',
             status: 'finished',
             createdAt: Date.now() - 100000,
         },
