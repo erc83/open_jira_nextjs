@@ -1,32 +1,37 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 
 import { Box, Button, TextField } from "@mui/material"
-import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';   /* importamos el Icono */
-import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined'; /* El nombre de lo puedo cambiar este es por defecto */
+import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';   
+import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined'; 
+import { EntriesContext } from "../../../context/entries";
 
 export const NewEntry = () => {
+    const { addNewEntry } = useContext(EntriesContext)
 
-    const [isAdding, setIsAdding] = useState(false)  // estoy agregando
+    const [isAdding, setIsAdding] = useState(false)  
 
     const [inputValue, setInputValue] = useState('')
     const [touched, setTouched] = useState( true )
 
-    const onTextFieldChanges = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {   // event.  tradicional en javascript podemos ver el evento  
+    const onTextFieldChanges = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {   
         setInputValue( event.target.value)
     }
 
     const onSave = () => {
         if( inputValue.length === 0) return;
+        
+        addNewEntry( inputValue );       
 
-        console.log({ inputValue }) // estructurando el objeto
+        setIsAdding( false );
+        setTouched( false );
+        setInputValue('');
     }
-
 
   return (
     <Box sx={{ marginBottom:2 , paddingX: 2 }}>  
 
         {
-            isAdding ? (   // aqui puedo tranformar en un componente porque no se va a expandir mas
+            isAdding ? (   
                 <>
                     <TextField 
                         fullWidth
@@ -51,7 +56,7 @@ export const NewEntry = () => {
                         <Button
                             variant='outlined'        
                             color='secondary'
-                            endIcon={ <SaveOutlinedIcon /> }   /* Usamos unicono */
+                            endIcon={ <SaveOutlinedIcon /> }   
                             onClick={ onSave }
                             >
                             Guardar
@@ -71,16 +76,6 @@ export const NewEntry = () => {
                 </>
             )
         }
-       
-
-
-        
-
-
-        
-
-
-
     </Box>
   )
 }
