@@ -1,4 +1,4 @@
-import { FC, useContext, useMemo } from "react";
+import { DragEvent, FC, useContext, useMemo } from "react";
 import { Paper, List } from '@mui/material';
 
 import { EntryCard } from './';
@@ -23,12 +23,25 @@ export const EntryList:FC<Props> = ( { status } ) => { // el status no se tiene 
   // con esto ya tenemos definido el useMemo 
   const entriesByStatus = useMemo( () => entries.filter( entry => entry.status === status ), [entries] )   // cuando las entries cambien tiene que volver a memorizar
   
+  const allowDropEntry = (event:DragEvent<HTMLDivElement> ) => {
+    event.preventDefault()
+  }
 
+
+  const onDropEntry = (event: DragEvent<HTMLDivElement>) => {
+    // console.log(event)
+    const id = event.dataTransfer.getData('text');
+    console.log(id)
+
+  }
   
 
   return (
     // TODO: aqui haremos drop
-    <div>
+    <div
+      onDrop={ onDropEntry }
+      onDragOver={ allowDropEntry }    // para dejar caer algun objeto
+    >
         <Paper sx={{ 
             height: 'calc(100vh - 150px)', 
             overflow: 'scroll',
