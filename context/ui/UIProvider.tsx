@@ -25,12 +25,8 @@ export const UIProvider = ({ children }: {children: React.ReactNode}) => {
     }
     //const closeSideMenu = () => dispatch ({ type: 'UI - Close Sidebar'}) 
     
-    const setIsAddingEntry = ( ) => {
-       dispatch({ type: '[UIEntry] - isAddingEntry'})    
-   }
-
-    const setClosingEntry = ( ) => {
-       dispatch({ type: '[UIEntry] - isClosingEntry'})    
+    const setIsAddingEntry = ( isAdding: boolean ) => {
+       dispatch({ type: '[UIEntry] - Set isAddingEntry', payload: isAdding })    
    }
 
 
@@ -41,8 +37,7 @@ export const UIProvider = ({ children }: {children: React.ReactNode}) => {
            openSideMenu,
            closeSideMenu,   
 
-           setIsAddingEntry,
-           setClosingEntry
+           setIsAddingEntry
         }}>
             { children }
         </UIContext.Provider>

@@ -9,8 +9,8 @@ interface ContextProps {
     closeSideMenu: () => void;
 
     isAddingEntry: boolean;
-    setIsAddingEntry: () => void;
-    setClosingEntry: () => void;
+    setIsAddingEntry: (isAdding: boolean) => void;
+
 }
 
 

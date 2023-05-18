@@ -11,7 +11,7 @@ export const NewEntry = () => {
     const { addNewEntry } = useContext(EntriesContext)
 
     // const [isAdding, setIsAdding] = useState(false)  
-    const { setIsAddingEntry, isAddingEntry, setClosingEntry } = useContext(UIContext)
+    const { setIsAddingEntry, isAddingEntry } = useContext(UIContext)
 
     const [inputValue, setInputValue] = useState('')
     const [touched, setTouched] = useState( true )
@@ -25,7 +25,7 @@ export const NewEntry = () => {
         
         addNewEntry( inputValue );       
 
-        setClosingEntry()
+        setIsAddingEntry( false )
 
         setTouched( false );
         setInputValue('');
@@ -54,7 +54,7 @@ export const NewEntry = () => {
                     <Box display='flex' justifyContent='space-between'>
                         <Button
                             variant='text'
-                            onClick={ setClosingEntry }
+                            onClick={ () => setIsAddingEntry( false ) }
                             >
                             Cancelar
                         </Button>
@@ -74,7 +74,7 @@ export const NewEntry = () => {
                         startIcon={<AddCircleOutlinedIcon /> }
                         fullWidth
                         variant="outlined"
-                        onClick={ setIsAddingEntry }
+                        onClick={ () => setIsAddingEntry( true ) }
                     >
                         Agregar Tarea
                     </Button>
