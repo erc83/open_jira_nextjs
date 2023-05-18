@@ -3,7 +3,10 @@ import { UIState } from './';
 type UIActionType = 
 | { type: 'UI - Open Sidebar' } 
 | { type: 'UI - Close Sidebar' } 
-| { type: '[UIEntry] - Set isAddingEntry', payload: boolean } 
+| { type: '[UIEntry] - Set isAddingEntry', payload: boolean }    // lo hacemos con una accion
+| { type: '[UIEntry] - Start Dragging' } 
+| { type: '[UIEntry] - End Dragging' } 
+
 
 export const uiReducer = ( state: UIState, action: UIActionType ): UIState  => {
 
@@ -26,8 +29,19 @@ export const uiReducer = ( state: UIState, action: UIActionType ): UIState  => {
                 ...state,
                 isAddingEntry: action.payload,
             }    
+
+        case '[UIEntry] - Start Dragging':
+            return {   
+                ...state,
+                isDragging: true,
+            }    
+
+        case '[UIEntry] - End Dragging':
+            return {   
+                ...state,
+                isDragging: false,
+            }    
    
-        
         default:
             return state; 
     }

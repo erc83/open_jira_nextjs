@@ -1,6 +1,7 @@
 import { Card, CardActionArea, CardActions, CardContent, Typography } from '@mui/material';
 import { Entry } from '../../../interfaces';
-import { DragEvent, FC } from 'react';
+import { DragEvent, FC, useContext } from 'react';
+import { UIContext } from '../../../context/ui';
 
 interface Props {
     entry: Entry
@@ -8,15 +9,20 @@ interface Props {
 
 export const EntryCard: FC<Props> = ({ entry }) => {
 
+    const { startDragging, endDragging } = useContext( UIContext )
+
+
     const onDragStart = ( event: DragEvent ) => {
         console.log(event)
         event.dataTransfer.setData('text', entry._id)    // solo acepta string setData
 
         // todo: modificar el estado, para indicar que estoy haciendo drag
+        startDragging()
     }
 
     const onDragEnd = () => {
         // todo: cancelar el drag
+        endDragging()
     }
 
   return (

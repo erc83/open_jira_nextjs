@@ -4,7 +4,9 @@ import { Paper, List } from '@mui/material';
 import { EntryCard } from './';
 import { EntryStatus } from '../../../interfaces';
 import { EntriesContext } from "../../../context/entries";
+import { UIContext } from "../../../context/ui";
 
+import styles from './EntryList.module.css'  // ya viene en next
 
 // recibe una propiedad de tipo status y va a ser igual a mi EntryStatus de las interfaces 
 interface Props {
@@ -16,17 +18,18 @@ export const EntryList:FC<Props> = ( { status } ) => { // el status no se tiene 
   //console.log(status)
   const { entries } = useContext(EntriesContext);
 
+  const { isDragging,  startDragging, endDragging } = useContext(UIContext)      // importar el context)
+
+
   // const entriesByStatus = entries.filter( entry => entry.status === status );
   
   // usando el useMemo
-  
   // con esto ya tenemos definido el useMemo 
   const entriesByStatus = useMemo( () => entries.filter( entry => entry.status === status ), [entries] )   // cuando las entries cambien tiene que volver a memorizar
   
   const allowDropEntry = (event:DragEvent<HTMLDivElement> ) => {
     event.preventDefault()
   }
-
 
   const onDropEntry = (event: DragEvent<HTMLDivElement>) => {
     // console.log(event)
@@ -41,6 +44,7 @@ export const EntryList:FC<Props> = ( { status } ) => { // el status no se tiene 
     <div
       onDrop={ onDropEntry }
       onDragOver={ allowDropEntry }    // para dejar caer algun objeto
+      className={ isDragging ? styles.dragging : '' }
     >
         <Paper sx={{ 
             height: 'calc(100vh - 150px)', 
@@ -52,7 +56,7 @@ export const EntryList:FC<Props> = ( { status } ) => { // el status no se tiene 
         }}>
 
             {/* Todo: cambiará dependiendo si estoy haciendo drag o no */}
-            <List sx={{ opacity: 1}}>
+            <List sx={{ opacity: isDragging ? 0.2 : 1, transition: 'all .3s' }}>
 
               {
                 entriesByStatus.map(entry =>(
