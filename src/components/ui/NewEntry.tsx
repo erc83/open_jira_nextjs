@@ -1,14 +1,17 @@
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, useContext, useState } from 'react';
 
 import { Box, Button, TextField } from "@mui/material"
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';   
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined'; 
+
 import { EntriesContext } from "../../../context/entries";
+import { UIContext } from "../../../context/ui";
 
 export const NewEntry = () => {
     const { addNewEntry } = useContext(EntriesContext)
 
-    const [isAdding, setIsAdding] = useState(false)  
+    // const [isAdding, setIsAdding] = useState(false)  
+    const { setIsAddingEntry, isAddingEntry, setClosingEntry } = useContext(UIContext)
 
     const [inputValue, setInputValue] = useState('')
     const [touched, setTouched] = useState( true )
@@ -22,16 +25,18 @@ export const NewEntry = () => {
         
         addNewEntry( inputValue );       
 
-        setIsAdding( false );
+        setClosingEntry()
+
         setTouched( false );
         setInputValue('');
+
     }
 
   return (
     <Box sx={{ marginBottom:2 , paddingX: 2 }}>  
 
         {
-            isAdding ? (   
+            isAddingEntry ? (   
                 <>
                     <TextField 
                         fullWidth
@@ -49,7 +54,7 @@ export const NewEntry = () => {
                     <Box display='flex' justifyContent='space-between'>
                         <Button
                             variant='text'
-                            onClick={() => setIsAdding( false )}
+                            onClick={ setClosingEntry }
                             >
                             Cancelar
                         </Button>
@@ -69,7 +74,7 @@ export const NewEntry = () => {
                         startIcon={<AddCircleOutlinedIcon /> }
                         fullWidth
                         variant="outlined"
-                        onClick={ ()  => setIsAdding( true )}
+                        onClick={ setIsAddingEntry }
                     >
                         Agregar Tarea
                     </Button>
@@ -79,3 +84,7 @@ export const NewEntry = () => {
     </Box>
   )
 }
+function dispatch(arg0: void) {
+    throw new Error('Function not implemented.');
+}
+

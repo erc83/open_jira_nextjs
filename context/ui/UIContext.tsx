@@ -6,7 +6,11 @@ interface ContextProps {
 
     // methods 
     openSideMenu: () => void; 
-    closeSideMenu: () => void; 
+    closeSideMenu: () => void;
+
+    isAddingEntry: boolean;
+    setIsAddingEntry: () => void;
+    setClosingEntry: () => void;
 }
 
 
