@@ -6,6 +6,9 @@ interface ContextProps {
     
     //methods
     addNewEntry: (description: string) => void;
+
+    // method para hacer el drag
+    updateEntryDrag: (entry: Entry) => void
 }
 
 

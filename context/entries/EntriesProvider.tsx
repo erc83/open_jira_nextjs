@@ -50,13 +50,25 @@ export const EntriesProvider:FC<EntriesState> = ({ children }) => {
 
     }
 
+    // podemos recibir lo que pensemos que necesitamos en este caso una entrada de typo Entry 
+    // recibimos toda la entrada
+    const updateEntryDrag = ( entry: Entry ) => {
+
+        // despues tenemo que hacerlo con la base de datos que tiene un cuerpo
+        dispatch( { type: '[Entry] - Update-Drag-Entry', payload: entry })
+
+    }
+
+
    return (
        <EntriesContext.Provider value={{
          ...state,
 
         //method
-        addNewEntry     
-
+        addNewEntry,
+        
+        // pasamos updateEntryDrag para que sepa que tiene una nueva funcion
+        updateEntryDrag
        }}>
        { children }
        </EntriesContext.Provider>
