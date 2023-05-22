@@ -37,3 +37,5 @@ next-env.d.ts
 /info_open_jira
 
 /mongo
+
+.env
