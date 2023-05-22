@@ -16,7 +16,7 @@ const mongooConnection = {
 export const connect = async () => {
 
     if( mongooConnection.isConnected ) {    // si la coneccion es distinta a 0
-        console.log('Ya estamos conectados');
+        console.log('Ya estabamos conectados');
         return
     }
 
@@ -33,14 +33,14 @@ export const connect = async () => {
 
     } 
 
-    await mongoose.connect('....')
+    await mongoose.connect( process.env.MONGO_URL || '');
     mongooConnection.isConnected = 1;
-    console.log('Conectado a MongoDB', '....')   // seria bueno colocar el url de mongo
+    console.log('Conectado a MongoDB', process.env.MONGO_URL)   // seria bueno colocar el url de mongo
 }
 
 export const disconnect = async () => {
     // esto se tiene que llamar solo si isConected !== 0
-    if ( mongooConnection.isConnected !== 0 ) return;   // voy a salirme, no tengo que salirme si ya estoy desconextado
+    if ( mongooConnection.isConnected === 0 ) return;   // voy a salirme, no tengo que salirme si ya estoy desconextado
 
     await mongoose.disconnect();
     console.log('Desconectado de MongoDB')
