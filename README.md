@@ -18,6 +18,15 @@ Renombrar el archivo __.env.template__ a __.env__
 
 Revisar el arvhivo __.env.example__ como referencia para el archivo __.env__
 
+## LLenar la base de datos con informacion de pruebas
+
+Llamar:
+``` 
+    http://localhost:3000/api/seed
+```
+
+*** Nota: si se llama la segunda vez purga la base de datos y carga 3 registros nuevamente
+
 
 
 

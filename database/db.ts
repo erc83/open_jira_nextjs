@@ -39,6 +39,9 @@ export const connect = async () => {
 }
 
 export const disconnect = async () => {
+
+    if( process.env.NODE_ENV === 'development' ) return;   // si esta en desarrollo no se va a desconectar
+
     // esto se tiene que llamar solo si isConected !== 0
     if ( mongooConnection.isConnected === 0 ) return;   // voy a salirme, no tengo que salirme si ya estoy desconextado
 

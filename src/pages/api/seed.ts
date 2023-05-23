@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse} from 'next';
-import { db } from '../../../database';
+import { db, seedData } from '../../../database';
+import { EntryModel } from '../../../models';
 
 type Data = {
     message: string;
@@ -12,8 +13,11 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
     }
 
     await db.connect();
-
     // aqui podemos hacer las consultas que necesitamos a la base de datos
+    
+    await EntryModel.deleteMany()      // borra todo lo de la base de datos si no tiene condicion de entradas
+
+    await EntryModel.insertMany( seedData.entries );    // tomo el seed data e inserto los entries
 
     await db.disconnect();
 
