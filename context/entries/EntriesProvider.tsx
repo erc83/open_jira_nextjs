@@ -1,8 +1,10 @@
-import { FC, useReducer } from 'react';
+import { FC, useEffect, useReducer } from 'react';
 import { v4 as uuidv4 } from 'uuid';   
 
 import { EntriesContext, entriesReducer } from './';
 import { Entry } from '../../interfaces';
+import { entriesApi } from '../../apis';
+
 
 
 export interface EntriesState {
@@ -39,6 +41,21 @@ export const EntriesProvider:FC<EntriesState> = ({ children }) => {
         dispatch( { type: '[Entry] - Update-Drag-Entry', payload: entry })
 
     }
+
+    //la ejecutamos la primera vez que la app es cargada
+    const refreshEntry = async() => {
+        // const resp = await entriesApi.get('/entries')
+        const { data } = await entriesApi.get<Entry[]>('/entries') //Entry[] arreglo de entradas
+        console.log(data)
+        dispatch({ type: '[Entry] - Refresh-Entry', payload: data }) 
+    }
+
+
+    // para disparar efectos secundarios, llama la funcion 
+    useEffect(() => {
+        refreshEntry();
+    },[]);
+    
 
 
    return (
