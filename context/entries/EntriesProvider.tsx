@@ -45,10 +45,21 @@ export const EntriesProvider:FC<EntriesState> = ({ children }) => {
 
     // podemos recibir lo que pensemos que necesitamos en este caso una entrada de typo Entry 
     // recibimos toda la entrada
-    const updateEntryDrag = ( entry: Entry ) => {
+    // const updateEntryDrag = async( entry: Entry ) => {
+    const updateEntryDrag = async( {_id, description, status }: Entry ) => {
 
-        // despues tenemo que hacerlo con la base de datos que tiene un cuerpo
-        dispatch( { type: '[Entry] - Update-Drag-Entry', payload: entry })
+        try {
+            //const { data } = await entriesApi.put<Entry>('/entries', entry) // puedo enviar toda la entrada 
+            // const { data } = await entriesApi.put<Entry>('/entries', { description: entry.description, status: entry.status})
+            const { data } = await entriesApi.put<Entry>(`/entries/${_id}`, { description, status }) // mas eficiente
+            // mi respuesta es una entrada actulizada
+
+            // despues tenemo que hacerlo con la base de datos que tiene un cuerpo
+            dispatch( { type: '[Entry] - Update-Drag-Entry', payload: data }) // la data es de tipo Entry
+        } catch (error) {
+            console.log({error})
+        }
+
 
     }
 
