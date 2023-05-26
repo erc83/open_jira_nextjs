@@ -1,5 +1,5 @@
 import { FC, useEffect, useReducer } from 'react';
-import { v4 as uuidv4 } from 'uuid';   
+// import { v4 as uuidv4 } from 'uuid';   
 
 import { EntriesContext, entriesReducer } from './';
 import { Entry } from '../../interfaces';
@@ -20,16 +20,26 @@ export const EntriesProvider:FC<EntriesState> = ({ children }) => {
 
    const [state, dispatch] = useReducer( entriesReducer, Entries_INITIAL_STATE)
 
-    const addNewEntry = ( description : string )=> {
+    const addNewEntry = async( description : string )=> {
 
-        const newEntry: Entry = { 
+        /* const newEntry: Entry = { 
             _id: uuidv4() ,
             description,
             createdAt: Date.now(),
             status: 'pending'
-        }
+        } */
 
-        dispatch({ type:'[Entry] - Add-Entry', payload: newEntry })
+        // la entrada la tomamos desde el endpont
+
+        // const resp = await entriesApi.post<Entry>('/entries')  // espera un Entry de la interfaz
+        //const resp = await entriesApi.post<Entry>('/entries', { description: description })  // necesita en el body la description
+        const resp = await entriesApi.post<Entry>('/entries', { description }) 
+
+
+
+
+        // El dispatch esta esperando una entrada nuevamente
+        dispatch({ type:'[Entry] - Add-Entry', payload: resp.data })
 
     }
 
