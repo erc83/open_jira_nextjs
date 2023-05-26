@@ -53,9 +53,31 @@ const updateEntry = async ( req: NextApiRequest, res: NextApiResponse<Data>) => 
     } = req.body
          // runValidation para que revise que estado sea uno de los estados de nuestra numeracion
            // new en true para que nos mande y no regrese la informacion actualizada
-    const updatedEntry = await EntryModel.findByIdAndUpdate( id, { description, status }, { runValidators: true, new: true });
+    
+    try {
+        const updatedEntry = await EntryModel.findByIdAndUpdate( id, { description, status }, { runValidators: true, new: true });
+        // opcional
+        // entryToUpdate.description = description;
+        // entryToUpdate.status = status;
+        // await entryToUpdate.save()
+        await db.disconnect()
+        res.status(200).json( updatedEntry! );   // con el ! le decimos que siempre va a tener un valor porque lo revisamos
+
+    } catch (error: any) {
+        console.log({ error })
+        await db.disconnect()
+       //  res.status(400).json({ message: JSON.stringify( error )})
+
+       // hay que especificar bien para ayudara al desarrollador de front-end en que se esta equivocando
+        res.status(400).json({ message: JSON.stringify( error.errors.status.message )})
+
+
+    }
+
+
+
+
 
     // res.status(200).json( updatedEntry ); // me muestra el error que puede ser nulo
-    res.status(200).json( updatedEntry! );   // con el ! le decimos que siempre va a tener un valor porque lo revisamos
 
 }
