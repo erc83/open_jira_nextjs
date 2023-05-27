@@ -18,6 +18,15 @@ Renombrar el archivo __.env.template__ a __.env__
 
 Revisar el arvhivo __.env.example__ como referencia para el archivo __.env__
 
+
+* Recontruir los modulos de node y levantar Next
+```
+yarn install
+yarn dev
+```
+
+
+
 ## LLenar la base de datos con informacion de pruebas
 
 Llamar:
