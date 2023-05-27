@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useMemo, useState } from 'react';
 
 import { capitalize, Button, Card, CardActions, CardContent, CardHeader, 
     FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, 
@@ -19,6 +19,9 @@ export const EntryPage = () => {
     const [status, setStatus] = useState<EntryStatus>('pending');
     //cuando alguien toda el formulario
     const [touched, setTouched] = useState(false);
+
+    const isNotValid = useMemo(() => inputValue.length <= 0 && touched, [inputValue, touched])
+
 
     //cuando el campo cambie llamaremos al setInputChange con el valor que tenga el formulario
     const onTextFieldInputChange = ( event: ChangeEvent<HTMLInputElement> ) => {
@@ -65,6 +68,12 @@ export const EntryPage = () => {
                                 label='Nueva Entrada'
                                 value={ inputValue }
                                 onChange={ onTextFieldInputChange }
+
+                                onBlur={ () => setTouched( true )}
+                                /*  helperText={ inputValue.length <=0 && touched  && "Ingrese un valor" }
+                                 error={ inputValue.length <= 0 && touched } */
+                                helperText={ isNotValid  && "Ingrese un valor" }
+                                error={ isNotValid && touched }
                             />
 
                             <FormControl>
@@ -95,6 +104,8 @@ export const EntryPage = () => {
                                 variant='contained'
                                 fullWidth
                                 onClick={ onSaveUpdate }
+                                /* aqui esta en el state el inputValue */
+                                disabled={ inputValue.length <= 0  }
                             >
                                 Save
                             </Button>
