@@ -23,6 +23,8 @@ export default function (req: NextApiRequest, res: NextApiResponse<Data>) {
         case 'PUT':
             return updateEntry( req, res );
 
+        case 'GET':
+            return getEntry ( req, res );
         default:
             return res.status(400).json({ message: 'Método no existe' })
     }
@@ -79,5 +81,25 @@ const updateEntry = async ( req: NextApiRequest, res: NextApiResponse<Data>) => 
 
 
     // res.status(200).json( updatedEntry ); // me muestra el error que puede ser nulo
+
+}
+
+
+const getEntry = async (req: NextApiRequest, res: NextApiResponse<Data> ) => {
+    //const resp = req.query;
+    //console.log(resp)
+    const { id } = req.query;
+    await db.connect()
+    const entryToGet = await EntryModel.findById( id )
+
+    //console.log(entryToGet)    
+    
+    if(!entryToGet) {
+        await db.disconnect()
+        res.status(400).json({message: 'no hay entrada con ese id: ' + id })
+    }
+    
+    res.status(200).json( entryToGet )
+    await db.disconnect()
 
 }
