@@ -26,10 +26,18 @@ export const EntryPage = () => {
     }
 
     //
-    const onStatusChange = () => {                                                                                                  
-
+    const onStatusChangeRadioGroup = (event: ChangeEvent<HTMLInputElement>) => {                                                                                                  
+        console.log(event.target.value)
+        
+        //setStatus(event.target.value)             // no lo toma
+        // setStatus(event.target.value as any)     // con el any pasa pero no ayuda mucho
+        setStatus( event.target.value as EntryStatus ); // utiliza la interfaz
     }
 
+
+    const onSaveUpdate = () => {
+        console.log({ inputValue, status })
+    }
 
 
     return (
@@ -63,6 +71,8 @@ export const EntryPage = () => {
                                 <FormLabel>Estado:</FormLabel>
                                 <RadioGroup
                                     row={ true }
+                                    value={status }
+                                    onChange={ onStatusChangeRadioGroup }
                                 >
                                     {
                                         validStatus.map( option => (
@@ -84,6 +94,7 @@ export const EntryPage = () => {
                                 startIcon={<SaveOutlinedIcon />}
                                 variant='contained'
                                 fullWidth
+                                onClick={ onSaveUpdate }
                             >
                                 Save
                             </Button>
