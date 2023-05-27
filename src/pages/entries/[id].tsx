@@ -1,7 +1,12 @@
-import { Button, Card, CardActions, CardContent, CardHeader, Grid, TextField } from "@mui/material"
+import { capitalize, Button, Card, CardActions, CardContent, CardHeader, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField, IconButton } from '@mui/material';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 import { Layout } from "@/components/layouts"
+import { EntryStatus } from "../../../interfaces";
+
+
+const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished']
 
 export const EntryPage = () => {
     return (
@@ -17,8 +22,6 @@ export const EntryPage = () => {
                             title="Entrada:"
                             subheader={`Creada hace: .... minutos`}
                         >
-
-
                         </CardHeader>
 
                         <CardContent>
@@ -30,6 +33,25 @@ export const EntryPage = () => {
                                 multiline
                                 label='Nueva Entrada'
                             />
+
+                            <FormControl>
+                                <FormLabel>Estado:</FormLabel>
+                                <RadioGroup
+                                    row={ true }
+                                >
+                                    {
+                                        validStatus.map( option => (
+                                            <FormControlLabel
+                                                key={ option }
+                                                value={ option }
+                                                control={ <Radio/> }
+                                                label={ capitalize(option) }
+                                            />
+                                        ))
+                                    }
+                                </RadioGroup>
+                            </FormControl>
+
                         </CardContent>
 
                         <CardActions>
@@ -49,6 +71,16 @@ export const EntryPage = () => {
 
 
             </Grid>
+
+            <IconButton sx={{
+                position:'fixed',
+                bottom: 80,
+                right: 80,
+                backgroundColor: 'error.dark'
+            }}>
+                <DeleteOutlinedIcon/>
+            </IconButton>
+
         </Layout>
     )
 }
