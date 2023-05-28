@@ -1,6 +1,7 @@
+import { DragEvent, FC, useContext } from 'react';
+import { useRouter } from 'next/router';
 import { Card, CardActionArea, CardActions, CardContent, Typography } from '@mui/material';
 import { Entry } from '../../../interfaces';
-import { DragEvent, FC, useContext } from 'react';
 import { UIContext } from '../../../context/ui';
 
 interface Props {
@@ -10,6 +11,9 @@ interface Props {
 export const EntryCard: FC<Props> = ({ entry }) => {
 
     const { startDragging, endDragging } = useContext( UIContext )
+    // useRouter?    ya tengo las tarjetas cargadas y se tiene que hacer la navegacion cuando el cliente hace click en ellas
+    const router = useRouter();
+
 
 
     const onDragStart = ( event: DragEvent ) => {
@@ -24,9 +28,13 @@ export const EntryCard: FC<Props> = ({ entry }) => {
         // todo: cancelar el drag
         endDragging()
     }
+    const onClickUpdateEntry = () => {
+        router.push(`/entries/${ entry._id }`);
+    }
 
   return (
     <Card
+        onClick={ onClickUpdateEntry  }
         sx={{ marginBottom: 1 }}
         draggable
         onDragStart={ onDragStart}
