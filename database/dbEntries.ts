@@ -18,6 +18,8 @@ export const getEntryById = async( id: string ): Promise<IEntry | null> => {
 
     // 2 panoramas que el id tenga informacion y que no tenga informacion
 
-    return entry;  // no funciona por la serializacion
+    // return entry;  // no funciona por la serializacion
+
+    return JSON.parse( JSON.stringify(entry) ); // SERIALIZANDO EL ID DE MONGO 
 
 }

@@ -22,11 +22,10 @@ export const Nabvar = () => {
                 <MenuOutlinedIcon />
             </IconButton>
 
-            <NextLink href='/' passHref>
-              <Link underline="none" color={ 'white' }>
-                <Typography variant="h5">OpenJira</Typography>
-              </Link>
+            <NextLink href='/' passHref >
+                  <Typography variant="h5" color={'white'}>OpenJira</Typography>
             </NextLink>
+            
         </Toolbar>
     </AppBar>
   )

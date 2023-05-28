@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, useMemo, useState } from 'react';
 import { GetServerSideProps } from 'next'   // del snipper nextss y es solo la definicion de la interfaz//
-import mongoose from 'mongoose';   // puedo desestructurar isValidObjectId de mongoose 
+//import mongoose from 'mongoose';   // puedo desestructurar isValidObjectId de mongoose 
 // import { isValidObjectId } from 'mongoose';   para validar el id de mongo
 
 import { capitalize, Button, Card, CardActions, CardContent, CardHeader, 
@@ -21,11 +21,14 @@ interface Props {
 }
 
 export const EntryPage:FC<Props> = (props) => {
+    //console.log(props.entry)
+    const { entry } = props 
+
  
-    const [inputValue, setInputValue] = useState('');
-    const [status, setStatus] = useState<EntryStatus>('pending');
+    const [inputValue, setInputValue] = useState(entry.description);
+    const [status, setStatus] = useState<EntryStatus>(entry.status);
     //cuando alguien toda el formulario
-    const [touched, setTouched] = useState(false);
+    const [touched, setTouched] = useState(false); //siempre en false
 
     const isNotValid = useMemo(() => inputValue.length <= 0 && touched, [inputValue, touched])
 
@@ -48,8 +51,9 @@ export const EntryPage:FC<Props> = (props) => {
         console.log({ inputValue, status })
     }
 
+    {/* <Layout title="... ... ..."> */}
     return (
-        <Layout title="... ... ...">
+        <Layout title={ inputValue.substring(0,7) + '...' }>
             <Grid 
                 container
                 justifyContent='center'
@@ -58,8 +62,8 @@ export const EntryPage:FC<Props> = (props) => {
                 <Grid item xs={ 12 } sm={ 8 } md={ 6 }>
                     <Card>
                         <CardHeader
-                            title={`Entrada: ${ inputValue }`}
-                            subheader={`Creada hace: .... minutos`}
+                            title={`Entrada:`}
+                            subheader={`Creada hace: ${entry.createdAt} minutos`}
                         >
                         </CardHeader>
                         <CardContent>
