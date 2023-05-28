@@ -11,12 +11,13 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 import { Layout } from "@/components/layouts"
-import { EntryStatus } from "../../../interfaces";
+import { Entry, EntryStatus } from "../../../interfaces";
+import { dbEntry } from '../../../database';
 
 const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished']
 
 interface Props {
-    age: number;
+    entry: Entry;
 }
 
 export const EntryPage:FC<Props> = (props) => {
@@ -147,9 +148,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
    // const { id } = ctx.params   // me algea porque no sabe que tipo de dato es
     const { id } = ctx.params as { id: string }  // solucionado
 
+    const entry =  await dbEntry.getEntryById(id) // no importa que no tenga el id la funcion se encarga de validarlo
+    // entry puede ser null si es null redirecciona
 
-    // aplicando mongoID si no es valido no es necesario renderizar el componente
-    if( !mongoose.isValidObjectId(id)) {
+
+/*     // aplicando mongoID si no es valido no es necesario renderizar el componente
+    if( !mongoose.isValidObjectId(id)) { */
+    if( !entry ) {
         return {
             redirect:{
                 destination: '/',
@@ -160,7 +165,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
  
     return {
         props: {
-           id
+           /* id es solo un valor, mejor enviamos el entry */
+           entry
         }
     }
 }
