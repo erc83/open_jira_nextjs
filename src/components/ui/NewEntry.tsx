@@ -84,7 +84,4 @@ export const NewEntry = () => {
     </Box>
   )
 }
-function dispatch(arg0: void) {
-    throw new Error('Function not implemented.');
-}
 

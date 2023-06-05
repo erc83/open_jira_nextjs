@@ -1,7 +1,5 @@
-import { ChangeEvent, FC, useMemo, useState } from 'react';
-import { GetServerSideProps } from 'next'   // del snipper nextss y es solo la definicion de la interfaz//
-//import mongoose from 'mongoose';   // puedo desestructurar isValidObjectId de mongoose 
-// import { isValidObjectId } from 'mongoose';   para validar el id de mongo
+import { ChangeEvent, FC, useContext, useMemo, useState } from 'react';
+import { GetServerSideProps } from 'next'  
 
 import { capitalize, Button, Card, CardActions, CardContent, CardHeader, 
     FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, 
@@ -10,24 +8,30 @@ import { capitalize, Button, Card, CardActions, CardContent, CardHeader,
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
+import { EntriesContext } from '../../../context/entries';
+import { dbEntries } from '../../../database';
 import { Layout } from "@/components/layouts"
 import { Entry, EntryStatus } from "../../../interfaces";
-import { dbEntry } from '../../../database';
+
+
+
+
 
 const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished']
 
 interface Props {
-    entry: Entry;
+    entry: Entry
 }
 
-export const EntryPage:FC<Props> = (props) => {
+export const EntryPage:FC<Props>  = ({ entry }) => {
     //console.log(props.entry)
-    const { entry } = props 
+
+
+    const { updateEntryDrag } = useContext( EntriesContext );
 
  
     const [inputValue, setInputValue] = useState(entry.description);
     const [status, setStatus] = useState<EntryStatus>(entry.status);
-    //cuando alguien toda el formulario
     const [touched, setTouched] = useState(false); //siempre en false
 
     const isNotValid = useMemo(() => inputValue.length <= 0 && touched, [inputValue, touched])
@@ -40,18 +44,26 @@ export const EntryPage:FC<Props> = (props) => {
 
     //
     const onStatusChangeRadioGroup = (event: ChangeEvent<HTMLInputElement>) => {                                                                                                  
-        console.log(event.target.value)
+        // console.log(event.target.value)
         
         //setStatus(event.target.value)             // no lo toma
         // setStatus(event.target.value as any)     // con el any pasa pero no ayuda mucho
         setStatus( event.target.value as EntryStatus ); // utiliza la interfaz
     }
 
-    const onSaveUpdate = () => {
-        console.log({ inputValue, status })
+    const onSaveUpdate = async () => {
+        //console.log({ inputValue, status })
+        if( inputValue.trim().length === 0 ) return; // no hace nada retorna
+
+        const updatedEntry: Entry = {
+            ...entry, 
+                status, 
+                description: inputValue
+        } 
+
+        updateEntryDrag( updatedEntry ); // NO ES UNA FUNCTION ALGO PASA AQUI
     }
 
-    {/* <Layout title="... ... ..."> */}
     return (
         <Layout title={ inputValue.substring(0,7) + '...' }>
             <Grid 
@@ -139,41 +151,29 @@ export const EntryPage:FC<Props> = (props) => {
 // funcion asyncrona donde podemos fetch a otro lugar y corre por el lado del servidor
 // podemos agregar secret key, tokens
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    //const { data } = await  entriesApi // se puede hacer pero es como preguntarse a nosotros mismo Eric como te llamas, 
-    // no tiene sentido porque estamos en el mismo backend 
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
-    // lo primero tratar de obtener el id que viene por la URL, si el id no es valido tengo que sacar al cliente de hay
-    // del context sacamos la informacion 
-    // http://localhost:3000/entries/123    //  http://localhost:3000/entries/:param
+    const { id } = params as { id: string };  // solucionado
 
+    const entry =  await dbEntries.getEntryById(id) // no importa que no tenga el id la funcion se encarga de validarlo
 
-   // console.log(ctx.params)   // el context que tengo aqui es distinto al del store // tambien se puede desestructurar
-   // const { id } = ctx.params   // me algea porque no sabe que tipo de dato es
-    const { id } = ctx.params as { id: string }  // solucionado
-
-    const entry =  await dbEntry.getEntryById(id) // no importa que no tenga el id la funcion se encarga de validarlo
-    // entry puede ser null si es null redirecciona
-
-
-/*     // aplicando mongoID si no es valido no es necesario renderizar el componente
-    if( !mongoose.isValidObjectId(id)) { */
     if( !entry ) {
         return {
             redirect:{
                 destination: '/',
-                permanent: false 
+                permanent: false,
             }
         }
     }
- 
+    
+
+
     return {
         props: {
-           /* id es solo un valor, mejor enviamos el entry */
            entry
         }
     }
 }
 
-export default EntryPage
+export default EntryPage;
 

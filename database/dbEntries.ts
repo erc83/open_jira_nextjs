@@ -12,9 +12,9 @@ export const getEntryById = async( id: string ): Promise<IEntry | null> => {
     await db.connect();
     //lean() de mongoose trabaja con el minimo necesario, cuando sabemos que trabajamos con menos informacion
     // logramos menos volumen de data que carga en el entry
-    const entry = await EntryModel.findById(id).lean()
+    const entry = await EntryModel.findById(id).lean();
 
-    await db.disconnect()
+    await db.disconnect();
 
     // 2 panoramas que el id tenga informacion y que no tenga informacion
 
@@ -23,3 +23,11 @@ export const getEntryById = async( id: string ): Promise<IEntry | null> => {
     return JSON.parse( JSON.stringify(entry) ); // SERIALIZANDO EL ID DE MONGO 
 
 }
+
+
+/* 
+export const updateEntryById = async( entry ): Promise<IEntry | null> => {
+    
+
+}
+ */

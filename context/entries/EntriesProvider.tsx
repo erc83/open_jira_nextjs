@@ -13,7 +13,7 @@ export interface EntriesState {
 }
 
 const Entries_INITIAL_STATE: EntriesState = {
-    entries: []
+    entries: [],
 }
 
 export const EntriesProvider:FC<EntriesState> = ({ children }) => {
@@ -55,19 +55,17 @@ export const EntriesProvider:FC<EntriesState> = ({ children }) => {
             // mi respuesta es una entrada actulizada
 
             // despues tenemo que hacerlo con la base de datos que tiene un cuerpo
-            dispatch( { type: '[Entry] - Update-Drag-Entry', payload: data }) // la data es de tipo Entry
+            dispatch( { type: '[Entry] - Update-Drag-Entry', payload: data   }) // la data es de tipo Entry
         } catch (error) {
             console.log({error})
         }
-
-
     }
 
     //la ejecutamos la primera vez que la app es cargada
     const refreshEntry = async() => {
         // const resp = await entriesApi.get('/entries')
         const { data } = await entriesApi.get<Entry[]>('/entries') //Entry[] arreglo de entradas
-        console.log(data)
+        // console.log(data)
         dispatch({ type: '[Entry] - Refresh-Entry', payload: data }) 
     }
 
@@ -79,6 +77,11 @@ export const EntriesProvider:FC<EntriesState> = ({ children }) => {
     
 
 
+
+
+
+
+
    return (
        <EntriesContext.Provider value={{
          ...state,
@@ -87,7 +90,7 @@ export const EntriesProvider:FC<EntriesState> = ({ children }) => {
         addNewEntry,
         
         // pasamos updateEntryDrag para que sepa que tiene una nueva funcion
-        updateEntryDrag
+        updateEntryDrag, 
        }}>
        { children }
        </EntriesContext.Provider>
