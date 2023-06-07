@@ -1,6 +1,8 @@
 import { FC } from 'react';
 import Head from 'next/head';   // especifico cierta propiedaddes a mostrar en el el head
 
+import { SnackbarProvider } from 'notistack';
+
 import { Box, CssBaseline, ThemeProvider } from "@mui/material"
 import { darkTheme, lightTheme } from '../../../themes';
 
@@ -15,6 +17,8 @@ interface Props {
 
 export const Layout: FC<Props> = ({ title = 'Open Jira', children } ) => {
   return (
+    <SnackbarProvider maxSnack={ 3 }>
+
     <EntriesProvider entries={[]}>
       <UIProvider>
         <ThemeProvider theme={ darkTheme }>
@@ -37,6 +41,7 @@ export const Layout: FC<Props> = ({ title = 'Open Jira', children } ) => {
         </ThemeProvider> 
       </UIProvider>
     </EntriesProvider>
+    </SnackbarProvider>
   )
 }
 

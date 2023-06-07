@@ -8,7 +8,7 @@ interface ContextProps {
     addNewEntry: (description: string) => void;
 
     // method para hacer el drag
-    updateEntryDrag: (entry: Entry) => void;
+    updateEntryDrag: (entry: Entry, showSnackbar?: boolean) => void ;
 }
 
 

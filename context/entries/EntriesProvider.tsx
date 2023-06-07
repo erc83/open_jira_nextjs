@@ -1,6 +1,8 @@
 import { FC, useEffect, useReducer } from 'react';
 // import { v4 as uuidv4 } from 'uuid';   
 
+import { useSnackbar } from 'notistack'
+
 import { EntriesContext, entriesReducer } from './';
 import { Entry } from '../../interfaces';
 import { entriesApi } from '../../apis';
@@ -19,6 +21,8 @@ const Entries_INITIAL_STATE: EntriesState = {
 export const EntriesProvider:FC<EntriesState> = ({ children }) => {
 
    const [state, dispatch] = useReducer( entriesReducer, Entries_INITIAL_STATE)
+
+   const { enqueueSnackbar } = useSnackbar();
 
     const addNewEntry = async( description : string )=> {
 
@@ -46,7 +50,7 @@ export const EntriesProvider:FC<EntriesState> = ({ children }) => {
     // podemos recibir lo que pensemos que necesitamos en este caso una entrada de typo Entry 
     // recibimos toda la entrada
     // const updateEntryDrag = async( entry: Entry ) => {
-    const updateEntryDrag = async( {_id, description, status }: Entry ) => {
+    const updateEntryDrag = async( {_id, description, status }: Entry, showSnackbar = true ) => {
 
         try {
             //const { data } = await entriesApi.put<Entry>('/entries', entry) // puedo enviar toda la entrada 
@@ -56,6 +60,20 @@ export const EntriesProvider:FC<EntriesState> = ({ children }) => {
 
             // despues tenemo que hacerlo con la base de datos que tiene un cuerpo
             dispatch( { type: '[Entry] - Update-Drag-Entry', payload: data   }) // la data es de tipo Entry
+
+            // TODO: mostrar snackbar
+            if (showSnackbar ){
+                enqueueSnackbar('Entrada actualizada', {
+                    variant: 'success',
+                    autoHideDuration: 1500,
+                    anchorOrigin: { 
+                        vertical: 'top',
+                        horizontal: 'right'
+                    }
+                })
+            }
+
+
         } catch (error) {
             console.log({error})
         }

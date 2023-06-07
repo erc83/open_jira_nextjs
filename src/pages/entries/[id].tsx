@@ -17,6 +17,7 @@ import { Entry, EntryStatus } from "../../../interfaces";
 
 
 
+
 const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished']
 
 interface Props {
@@ -55,13 +56,21 @@ export const EntryPage:FC<Props>  = ({ entry }) => {
         //console.log({ inputValue, status })
         if( inputValue.trim().length === 0 ) return; // no hace nada retorna
 
-        const updatedEntry: Entry = {
-            ...entry, 
+        const updatedEntry: Entry = {   
+            ...entry,                       // para no sobreescribir las entradas
                 status, 
                 description: inputValue
         } 
 
-        updateEntryDrag( updatedEntry ); // NO ES UNA FUNCTION ALGO PASA AQUI
+        // console.log(updatedEntry)
+        // updateEntryDrag( updatedEntry ); // NO ES UNA FUNCTION ALGO PASA AQUI
+
+        updateEntryDrag(updatedEntry, true)    // el true es para snackBar
+
+       /*  const getentryprueba =  await dbEntries.getEntryById( updatedEntry._id )
+
+        console.log(getentryprueba)
+ */
     }
 
     return (

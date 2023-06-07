@@ -17,6 +17,7 @@ interface Props {
 export const EntryList:FC<Props> = ( { status } ) => { // el status no se tiene que memorizar porque siempre va a se el mismo
   //console.log(status)
   const { entries, updateEntryDrag } = useContext(EntriesContext);
+  console.log(entries)
 
   const { isDragging, endDragging } = useContext(UIContext)  // importar el context cuando isDragging y cuando tiene el endDragging
   // const entriesByStatus = entries.filter( entry => entry.status === status );
